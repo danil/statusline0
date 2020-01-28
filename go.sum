@@ -1,0 +1,8 @@
+github.com/danil/bytefmt v0.0.0-20200116114027-66c73918419e h1:XXfwrfVyak9AiwCLOnB0Uy0MSw1vLvU3GEEtwc1c7mE=
+github.com/danil/bytefmt v0.0.0-20200116114027-66c73918419e/go.mod h1:oID7bUjjKscl6e2uzhcV6UjvyLpjzLYqkwBgzultWJc=
+github.com/danil/bytefmt v0.0.0-20200117103302-6fd0a0c2a59e h1:TT/4QMhOnnnvdeR1DYZL5nNCJT3zJxuubwiDRDz4Grg=
+github.com/danil/bytefmt v0.0.0-20200117103302-6fd0a0c2a59e/go.mod h1:oID7bUjjKscl6e2uzhcV6UjvyLpjzLYqkwBgzultWJc=
+github.com/shirou/gopsutil v2.19.12+incompatible h1:WRstheAymn1WOPesh+24+bZKFkqrdCR8JOc77v4xV3Q=
+github.com/shirou/gopsutil v2.19.12+incompatible/go.mod h1:5b4v6he4MtMOwMlS0TUMTu2PcXUg8+E1lC7eC3UO/RA=
+golang.org/x/sys v0.0.0-20200116001909-b77594299b42 h1:vEOn+mP2zCOVzKckCZy6YsCtDblrpj/w7B9nxGNELpg=
+golang.org/x/sys v0.0.0-20200116001909-b77594299b42/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=

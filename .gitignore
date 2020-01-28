@@ -22,3 +22,7 @@ _cgo_export.*
 _testmain.go
 
 *.exe
+
+/examples/plainstatus1/plainstatus1
+/examples/plainstatus2/plainstatus2
+/examples/plainstatus2/plainstatus3
