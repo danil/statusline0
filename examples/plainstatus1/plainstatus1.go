@@ -63,7 +63,6 @@ func main() {
 		func() string { df := diskAvail(); return fmt.Sprintf(" %d", df) },
 		func() string { n := ctrNum(); return " c" + n },
 		func() string { return time.Now().Local().Format(" Jan-02-Mon MST 15:04") },
-		func() string { return "      " },
 	}
 	if *once {
 		plainstatus.Run(os.Stdout, f...)
