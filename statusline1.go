@@ -94,8 +94,7 @@ func FileName(pattern string) (string, error) {
 	return a[0], nil
 }
 
-// Run writes to the io writer every second
-// or writes to os stdout and return
+// Run writes to the io writer or writes to os stdout and return.
 func Run(w io.Writer, f ...func() string) error {
 	if w == os.Stdout {
 		for _, f := range f {
@@ -107,6 +106,7 @@ func Run(w io.Writer, f ...func() string) error {
 		_, err := fmt.Fprint(w, "\n")
 		return err
 	}
+
 	var buf bytes.Buffer
 	for {
 		for _, f := range f {

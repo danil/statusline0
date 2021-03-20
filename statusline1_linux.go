@@ -6,7 +6,9 @@ package statusline1
 
 import (
 	"io/ioutil"
+	"os"
 	"os/exec"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -20,48 +22,71 @@ func LoadAverage() string {
 	return string(p)
 }
 
-func BatteryPercent() (string, int8) {
-	const powerSupply = "/sys/class/power_supply/"
-	var enFull, enNow, enPerc int
-	var plugged, err = ioutil.ReadFile(powerSupply + "AC/online")
+type Battery struct {
+	Batteries string
+	Online    string
+}
+
+func (batt Battery) Percent() (string, int8) {
+	var full, now, perc int
+
+	plugged, err := ioutil.ReadFile(batt.Online)
 	if err != nil {
 		return "ERR:" + err.Error(), 0
 	}
-	batts, err := ioutil.ReadDir(powerSupply)
+
+	if batt.Online[len(batt.Batteries)-1] == os.PathSeparator {
+		return "ERR:batteries path trailing slash", 0
+	}
+
+	dir, prefix := path.Split(batt.Batteries)
+	if dir == "" {
+		return "ERR:missing batteries directory", 0
+	}
+	if prefix == "" {
+		return "ERR:missing batteries prefix", 0
+	}
+
+	batts, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return "ERR:" + err.Error(), 0
 	}
-	readval := func(name, field string) int {
-		var path = powerSupply + name + "/"
-		var file []byte
-		if tmp, err := ioutil.ReadFile(path + "energy_" + field); err == nil {
-			file = tmp
-		} else if tmp, err := ioutil.ReadFile(path + "charge_" + field); err == nil {
-			file = tmp
-		} else {
-			return 0
-		}
-		if ret, err := strconv.Atoi(strings.TrimSpace(string(file))); err == nil {
-			return ret
-		}
-		return 0
-	}
-	for _, batt := range batts {
-		name := batt.Name()
-		if !strings.HasPrefix(name, "BAT") {
+
+	for _, b := range batts {
+		name := b.Name()
+		if !strings.HasPrefix(name, prefix) {
 			continue
 		}
-		enFull += readval(name, "full")
-		enNow += readval(name, "now")
+		full += batteryPercentRead(dir, name, "full")
+		now += batteryPercentRead(dir, name, "now")
 	}
-	if enFull == 0 { // Battery found but no readable full file.
+
+	if full == 0 { // Battery found but no readable full file.
 		return "ERR", 0
 	}
-	enPerc = enNow * 100 / enFull
+
+	perc = now * 100 / full
 	if string(plugged) == "1\n" {
-		return strconv.Itoa(enPerc), +1
+		return strconv.Itoa(perc), +1
 	}
-	return strconv.Itoa(enPerc), -1
+
+	return strconv.Itoa(perc), -1
+}
+
+func batteryPercentRead(dir, name, field string) int {
+	var path = dir + name + "/"
+	var file []byte
+	if tmp, err := ioutil.ReadFile(path + "energy_" + field); err == nil {
+		file = tmp
+	} else if tmp, err := ioutil.ReadFile(path + "charge_" + field); err == nil {
+		file = tmp
+	} else {
+		return 0
+	}
+	if perc, err := strconv.Atoi(strings.TrimSpace(string(file))); err == nil {
+		return perc
+	}
+	return 0
 }
 
 func Temperature(p string) string {

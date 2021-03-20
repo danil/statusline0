@@ -12,7 +12,11 @@ import (
 )
 
 func TestBatteryPercent(t *testing.T) {
-	s, _ := statusline1.BatteryPercent()
+	b := statusline1.Battery{
+		Batteries: "/sys/class/power_supply/BAT",
+		Online:    "/sys/class/power_supply/AC/online",
+	}
+	s, _ := b.Percent()
 	ok, err := regexp.MatchString("^[0-9]", s)
 	if err != nil {
 		t.Fatal(err)
