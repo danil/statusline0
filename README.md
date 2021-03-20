@@ -1,8 +1,8 @@
-statusline1
+statusline0
 ===========
 
-[![Build Status](https://cloud.drone.io/api/badges/danil/statusline1/status.svg)](https://cloud.drone.io/danil/statusline1)
-[![Go Reference](https://pkg.go.dev/badge/github.com/danil/statusline1.svg)](https://pkg.go.dev/github.com/danil/statusline1)
+[![Build Status](https://cloud.drone.io/api/badges/danil/statusline0/status.svg)](https://cloud.drone.io/danil/statusline0)
+[![Go Reference](https://pkg.go.dev/badge/github.com/danil/statusline0.svg)](https://pkg.go.dev/github.com/danil/statusline0)
 
 Source files are distributed under the BSD-style license
 found in the [LICENSE](./LICENSE) file.
