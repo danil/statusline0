@@ -1,4 +1,4 @@
-module github.com/danil/plainstatus
+module github.com/danil/statusline1
 
 go 1.16
 

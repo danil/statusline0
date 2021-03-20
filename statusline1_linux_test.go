@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package plainstatus_test
+package statusline1_test
 
 import (
 	"regexp"
 	"testing"
 
-	"github.com/danil/plainstatus"
+	"github.com/danil/statusline1"
 )
 
 func TestBatteryPercent(t *testing.T) {
-	s, _ := plainstatus.BatteryPercent()
+	s, _ := statusline1.BatteryPercent()
 	ok, err := regexp.MatchString("^[0-9]", s)
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +23,7 @@ func TestBatteryPercent(t *testing.T) {
 }
 
 func TestLoadAverage(t *testing.T) {
-	s := plainstatus.LoadAverage()
+	s := statusline1.LoadAverage()
 	ok, err := regexp.MatchString("^[0-9]\\.[0-9]{2}", s)
 	if err != nil {
 		t.Fatal(err)
@@ -34,14 +34,14 @@ func TestLoadAverage(t *testing.T) {
 }
 
 func TestTemperature(t *testing.T) {
-	tPth, err := plainstatus.FileName("/sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input")
+	tPth, err := statusline1.FileName("/sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if tPth == "" {
 		t.Skipf("unexpected temperature file %s", tPth)
 	}
-	s := plainstatus.Temperature(tPth)
+	s := statusline1.Temperature(tPth)
 	ok, err := regexp.MatchString("^[0-9]{1,}$", s)
 	if err != nil {
 		t.Fatal(err)

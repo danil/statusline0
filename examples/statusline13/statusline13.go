@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/danil/bytefmt"
-	"github.com/danil/plainstatus"
+	"github.com/danil/statusline1"
 	"github.com/shirou/gopsutil/mem"
 )
 
@@ -35,14 +35,14 @@ func main() {
 		return bytefmt.New(fs.Bavail * uint64(fs.Bsize))
 	}
 	f := []func() string{
-		func() string { return fmt.Sprintf("%4s", plainstatus.LoadAverage1(plainstatus.LoadAverage())) },
+		func() string { return fmt.Sprintf("%4s", statusline1.LoadAverage1(statusline1.LoadAverage())) },
 		func() string { return fmt.Sprintf(" %d", bytefmt.New(memFree())) },
 		func() string { df := diskAvail(); return fmt.Sprintf(" %d", df) },
 		func() string { return time.Now().Local().Format(" Jan-02 MST 15:04") },
 	}
 	if *once {
-		plainstatus.Run(os.Stdout, f...)
+		statusline1.Run(os.Stdout, f...)
 	} else {
-		plainstatus.Run(plainstatus.Xsetroot{Interval: 1 * time.Second}, f...)
+		statusline1.Run(statusline1.Xsetroot{Interval: 1 * time.Second}, f...)
 	}
 }

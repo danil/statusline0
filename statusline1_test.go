@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package plainstatus_test
+package statusline1_test
 
 import (
 	"fmt"
 	"runtime"
 	"testing"
 
-	"github.com/danil/plainstatus"
+	"github.com/danil/statusline1"
 )
 
 var LoadAverage1FormatTests = []struct {
@@ -69,7 +69,7 @@ func Test_LoadAverage1Format(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			linkToExample := fmt.Sprintf("%s:%d", testFile, test.index)
-			s := fmt.Sprintf("%s", plainstatus.LoadAverage1(test.input))
+			s := fmt.Sprintf("%s", statusline1.LoadAverage1(test.input))
 			if s != test.expected {
 				t.Errorf("unexpected load average %#v, expected %#v %s", s, test.expected, linkToExample)
 			}
@@ -80,43 +80,43 @@ func Test_LoadAverage1Format(t *testing.T) {
 var BatterySignFormatTests = []struct {
 	name     string
 	index    int
-	input    plainstatus.BatterySign
+	input    statusline1.BatterySign
 	expected string
 }{
 	{
 		name:     "three digits",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: "100", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: "100", Icon: "⚡"},
 		expected: "100⚡",
 	},
 	{
 		name:     "two digits, charging",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: "42＋", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: "42＋", Icon: "⚡"},
 		expected: "42＋⚡",
 	},
 	{
 		name:     "one digit, discharging",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: "1-", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: "1-", Icon: "⚡"},
 		expected: "1-⚡",
 	},
 	{
 		name:     "empty",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: "", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: "", Icon: "⚡"},
 		expected: "ERR:n/a⚡",
 	},
 	{
 		name:     "blank",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: " ", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: " ", Icon: "⚡"},
 		expected: "ERR:n/a⚡",
 	},
 	{
 		name:     "long",
 		index:    getLine(),
-		input:    plainstatus.BatterySign{Power: "something went wrong", Icon: "⚡"},
+		input:    statusline1.BatterySign{Power: "something went wrong", Icon: "⚡"},
 		expected: "somethi⚡",
 	},
 }
@@ -139,43 +139,43 @@ func Test_BatterySignFormat(t *testing.T) {
 var DegreesPrefixFormatTests = []struct {
 	name     string
 	index    int
-	input    plainstatus.DegreesPrefix
+	input    statusline1.DegreesPrefix
 	expected string
 }{
 	{
 		name:     "three digits",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: "100", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: "100", Degree: "°"},
 		expected: "°100",
 	},
 	{
 		name:     "two digits",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: "42", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: "42", Degree: "°"},
 		expected: "°42",
 	},
 	{
 		name:     "one digit, minus",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: "-1", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: "-1", Degree: "°"},
 		expected: "°-1",
 	},
 	{
 		name:     "empty",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: "", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: "", Degree: "°"},
 		expected: "ERR:°n/a",
 	},
 	{
 		name:     "blank",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: " ", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: " ", Degree: "°"},
 		expected: "ERR:°n/a",
 	},
 	{
 		name:     "long",
 		index:    getLine(),
-		input:    plainstatus.DegreesPrefix{Value: "something went wrong", Degree: "°"},
+		input:    statusline1.DegreesPrefix{Value: "something went wrong", Degree: "°"},
 		expected: "°somethi",
 	},
 }
@@ -187,7 +187,7 @@ func Test_DegreesPrefixFormat(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			linkToExample := fmt.Sprintf("%s:%d", testFile, test.index)
-			s := fmt.Sprintf("%s", plainstatus.DegreesPrefix(test.input))
+			s := fmt.Sprintf("%s", statusline1.DegreesPrefix(test.input))
 			if s != test.expected {
 				t.Errorf("unexpected battery %#v, expected %#v %s", s, test.expected, linkToExample)
 			}
@@ -274,7 +274,7 @@ func TestConcatUpToMaxRunes(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			linkToExample := fmt.Sprintf("%s:%d", testFile, test.index)
-			s := plainstatus.ConcatUpToMaxRunes(test.max, test.strings...)
+			s := statusline1.ConcatUpToMaxRunes(test.max, test.strings...)
 			if s != test.expected {
 				t.Errorf("unexpected string %#v, expected %#v %s",
 					s, test.expected, linkToExample)
