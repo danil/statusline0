@@ -38,7 +38,7 @@ func Test_stat(t *testing.T) {
 		}
 	}
 
-	r := ".*\\.[0-9]+°[0-9]+ [0-9]+[a-zA-Z]~[0-9]+[a-zA-Z]+ [0-9]+[a-zA-Z]+ [a-zA-Z]+-[0-9]+-[a-z-A-Z]+ [A-Z]+ [0-9]+:[0-9]+"
+	r := ".*\\.[0-9]+°.* [0-9]+[a-zA-Z]~[0-9]+[a-zA-Z]+ [0-9]+[a-zA-Z]+ [a-zA-Z]+-[0-9]+-[a-z-A-Z]+ [A-Z]+ [0-9]+:[0-9]+"
 
 	ok, err := regexp.MatchString(r, buf.String())
 	if err != nil {
