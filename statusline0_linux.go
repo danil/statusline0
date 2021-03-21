@@ -35,7 +35,7 @@ func (batt Battery) Percent() (string, int8) {
 		return "ERR:" + err.Error(), 0
 	}
 
-	if batt.Online[len(batt.Batteries)-1] == os.PathSeparator {
+	if batt.Batteries[len(batt.Batteries)-1] == os.PathSeparator {
 		return "ERR:batteries path trailing slash", 0
 	}
 
